@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Web_AspDotNet_ArtikelDb.Controller
+namespace Web_AspDotNet_ArtikelDb
 {
     public class HomeController : Controller
     {
@@ -15,9 +15,22 @@ namespace Web_AspDotNet_ArtikelDb.Controller
         }
 
         [HttpPost]
-        public IActionResult Index()
+        public IActionResult Index(int id)
         {
             return View();
         }
+
+        [HttpGet]
+        public IActionResult Insert()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Insert(int id)
+        {
+            return View();
+        }
+
     }
 }
