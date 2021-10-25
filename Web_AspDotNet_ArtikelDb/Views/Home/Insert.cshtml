@@ -1,5 +1,5 @@
 ﻿@model Web_AspDotNet_ArtikelDb.Models.AddArtikel
-@addTagHelper Microsoft.As
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{
     Layout = null;
@@ -13,7 +13,12 @@
     <title>Insert</title>
 </head>
 <body>
-    <form asp-
-    <h1>Insert</h1>
+    <form method="post" asp-action="Insert" enctype="multipart/form-data">
+        <h1>Insert</h1>
+        <input type="text" asp-for="@Model.Bezeichnung" /><label asp-for="@Model.Bezeichnung"></label><br/>
+        <input type="text" asp-for="@Model.Preis" /><label asp-for="@Model.Preis"></label><br/>
+        <input type="file" asp-for="@Model.Bild" /><br/>
+        <button>Speichern</button>
+    </form>
 </body>
 </html>
