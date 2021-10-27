@@ -1,0 +1,28 @@
+﻿@model Web_AspDotNet_ArtikelDb.Models.UpdateArtikel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Update</title>
+</head>
+<body>
+    <form method="post" asp-action="Insert" enctype="multipart/form-data" style="border-radius:4px,4px,4px,4px;background-color:burlywood">
+        <h1>Artikel DB (ändern)</h1>
+        <input type="text" asp-for="@Model.AId" value="@Model.AId" /><label asp-for="@Model.AId"></label><br />
+        <input type="text" asp-for="@Model.Bezeichnung" value="@Model.Bezeichnung" /><label asp-for="@Model.Bezeichnung"></label><br />
+        <input type="text" asp-for="@Model.Preis" value="@Model.Preis" /><label asp-for="@Model.Preis"></label><br />
+        <label asp-for="@Model.Bildname">@Model.Bildname</label><label>Bildname</label><br />
+        <input type="file" asp-for="@Model.Bild" /><br />
+        <button>Speichern</button>
+        <button type="reset">Reset</button>
+    </form>
+    <a href="/home/admin">Zurück ohne Speichern</a>
+</body>
+</html>

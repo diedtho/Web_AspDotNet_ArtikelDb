@@ -8,5 +8,6 @@ namespace Web_AspDotNet_ArtikelDb.Models
     public class ListeArtikel
     {
         public List<Artikel> ArtikelListe { get; set; }
+        public string filter { get; set; }
     }
 }

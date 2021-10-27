@@ -69,9 +69,133 @@ namespace Web_AspDotNet_ArtikelDb
         }
 
         [HttpPost]
-        public IActionResult Index(int id)
+        public IActionResult Index(ListeArtikel listArt)
         {
-            return View();
+            string filter = listArt.filter;
+
+            // Artikelliste            
+            List<Artikel> listeArtikel = new();
+
+
+            // 3. SQL-Command
+            SqliteCommand cmdSql;
+            if (filter != null)
+            {
+                cmdSql = new SqliteCommand("Select * From Artikel WHERE Bezeichnung LIKE '%'||@filter||'%';", conn);
+                cmdSql.Parameters.AddWithValue("@filter", filter);
+            }
+            else
+            {
+                cmdSql = new SqliteCommand("Select * From Artikel;", conn);
+            }
+
+            // 4. Verbindung öffnen
+            conn.Open();
+
+            // 5. Ergebnis des Selects lesen
+            var dr = cmdSql.ExecuteReader();
+            while (dr.Read())
+            {
+                Artikel artikel = new Artikel
+                {
+                    AId = (int)(long)dr[0],  // "int" = 32bit, "long" = 64bit
+                    Bezeichnung = dr[1].ToString(),
+                    Preis = ((double)dr[2]).ToString(),
+                    Bildname = dr[3].ToString()
+                };
+                listeArtikel.Add(artikel);
+            }
+
+            // 6. Verbindung schließen
+            conn.Close();
+
+            // Nutzung des Models
+            ListeArtikel listArtNew = new ListeArtikel { ArtikelListe = listeArtikel };
+
+            return View(listArtNew);
+        }
+
+
+        [HttpGet]
+        public IActionResult Admin()
+        {
+            // Artikelliste            
+            List<Artikel> listeArtikel = new();
+
+            // 3. SQL-Command
+            SqliteCommand cmdSql = new SqliteCommand("Select * From Artikel;", conn);
+
+            // 4. Verbindung öffnen
+            conn.Open();
+
+            // 5. Ergebnis des Selects lesen
+            var dr = cmdSql.ExecuteReader();
+            while (dr.Read())
+            {
+                Artikel artikel = new Artikel
+                {
+                    AId = (int)(long)dr[0],  // "int" = 32bit, "long" = 64bit
+                    Bezeichnung = dr[1].ToString(),
+                    Preis = ((double)dr[2]).ToString(),
+                    Bildname = dr[3].ToString()
+                };
+                listeArtikel.Add(artikel);
+            }
+
+            // 6. Verbindung schließen
+            conn.Close();
+
+            // Nutzung des Models
+            ListeArtikel listArt = new ListeArtikel { ArtikelListe = listeArtikel };
+
+            return View(listArt);
+        }
+
+        [HttpPost]
+        public IActionResult Admin(ListeArtikel listArt)
+        {
+            string filter = listArt.filter;
+
+            // Artikelliste            
+            List<Artikel> listeArtikel = new();
+
+
+            // 3. SQL-Command
+            SqliteCommand cmdSql;
+            if (filter != null)
+            {
+                cmdSql = new SqliteCommand("Select * From Artikel WHERE Bezeichnung LIKE '%'||@filter||'%';", conn);
+                cmdSql.Parameters.AddWithValue("@filter", filter);
+            }
+            else
+            {
+                cmdSql = new SqliteCommand("Select * From Artikel;", conn);
+            }
+
+            // 4. Verbindung öffnen
+            conn.Open();
+
+            // 5. Ergebnis des Selects lesen
+            var dr = cmdSql.ExecuteReader();
+            while (dr.Read())
+            {
+                Artikel artikel = new Artikel
+                {
+                    AId = (int)(long)dr[0],  // "int" = 32bit, "long" = 64bit
+                    Bezeichnung = dr[1].ToString(),
+                    Preis = ((double)dr[2]).ToString(),
+                    Bildname = dr[3].ToString()
+                };
+                listeArtikel.Add(artikel);
+            }
+
+            // 6. Verbindung schließen
+            conn.Close();
+
+            // Nutzung des Models
+            ListeArtikel listArtNew = new ListeArtikel { ArtikelListe = listeArtikel };
+
+            return View(listArtNew);
         }
 
         [HttpGet]
@@ -89,7 +213,6 @@ namespace Web_AspDotNet_ArtikelDb
             string bildName = SpeichernBild(bild);
 
             // 2.
-
 
             // 3. SQL-Command (insert-Statement)            
             double preis = Double.Parse(neuerArtikel.Preis);
@@ -110,6 +233,110 @@ namespace Web_AspDotNet_ArtikelDb
             conn.Close();
 
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public IActionResult Update(int id)
+        {
+            UpdateArtikel updateArticle = new();
+
+            // 3. SQL-Command (insert-Statement)
+            SqliteCommand cmdSqlSelect = new SqliteCommand($"SELECT * FROM Artikel WHERE AId = @aId;", conn);
+            cmdSqlSelect.Parameters.AddWithValue("@aId", id);
+
+            // 4. Verbindung öffnen
+            conn.Open();
+
+            // 5. Ergebnis des Selects lesen
+            var dr = cmdSqlSelect.ExecuteReader();
+            while (dr.Read())
+            {
+                updateArticle = new UpdateArtikel
+                {
+                    AId = (int)(long)dr[0],  // "int" = 32bit, "long" = 64bit
+                    Bezeichnung = dr[1].ToString(),
+                    Preis = ((double)dr[2]).ToString(),
+                    Bildname = dr[3].ToString()
+                };
+            }
+
+            // 6. Verbindung schließen
+            conn.Close();
+
+            return View(updateArticle);
+        }
+
+        [HttpPost]
+        public IActionResult Update(Artikel artikel)
+        {            
+            // 3. SQL-Command (update-Statement)
+            SqliteCommand cmdSqlUpdate = new SqliteCommand($"UPDATE Artikel SET (Bezeichnung,EPreis,Bild) VALUES (@bezeichnung,@preis,@bildname) " +
+                $"WHERE AId = @aId;", conn);
+            cmdSqlUpdate.Parameters.AddWithValue("@aId", artikel.AId);
+            cmdSqlUpdate.Parameters.AddWithValue("@bezeichnung", artikel.AId);
+            cmdSqlUpdate.Parameters.AddWithValue("@preis", artikel.AId);
+            cmdSqlUpdate.Parameters.AddWithValue("@bildname", artikel.AId);
+
+            // 4. Verbindung öffnen
+            conn.Open();
+
+            // 5. Update-Statement ausführen
+            var dr = cmdSqlUpdate.ExecuteNonQuery();            
+
+            // 6. Verbindung schließen
+            conn.Close();
+
+            return RedirectToAction("Admin");
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            // 3. SQL-Command (update-Statement)
+            SqliteCommand cmdSqlUpdate = new SqliteCommand($"DELETE FROM Artikel WHERE AId = @aId;", conn);
+            cmdSqlUpdate.Parameters.AddWithValue("@aId", id);
+            
+            // 4. Verbindung öffnen
+            conn.Open();
+
+            // 5. Update-Statement ausführen
+            var dr = cmdSqlUpdate.ExecuteNonQuery();
+
+            // 6. Verbindung schließen
+            conn.Close();
+
+            return RedirectToAction("Admin");
+        }
+
+        [HttpGet]
+        public IActionResult Details(int id)
+        {
+            Artikel showArticle = new();
+
+            // 3. SQL-Command (insert-Statement)
+            SqliteCommand cmdSqlSelect = new SqliteCommand($"SELECT * FROM Artikel WHERE AId = @aId;", conn);
+            cmdSqlSelect.Parameters.AddWithValue("@aId", id);            
+
+            // 4. Verbindung öffnen
+            conn.Open();
+
+            // 5. Ergebnis des Selects lesen
+            var dr = cmdSqlSelect.ExecuteReader();
+            while (dr.Read())
+            {
+                showArticle = new Artikel
+                {
+                    AId = (int)(long)dr[0],  // "int" = 32bit, "long" = 64bit
+                    Bezeichnung = dr[1].ToString(),
+                    Preis = ((double)dr[2]).ToString(),
+                    Bildname = dr[3].ToString()
+                };                
+            }
+
+            // 6. Verbindung schließen
+            conn.Close();
+
+            return View(showArticle);
         }
 
         // Bildspeichermethode
@@ -138,5 +365,4 @@ namespace Web_AspDotNet_ArtikelDb
             }
         }
     }
-
 }
