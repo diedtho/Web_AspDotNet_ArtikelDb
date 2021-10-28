@@ -207,6 +207,12 @@ namespace Web_AspDotNet_ArtikelDb
         [HttpPost]
         public IActionResult Insert(AddArtikel neuerArtikel)
         {
+
+            if (!ModelState.IsValid)
+            {
+                return View(neuerArtikel);
+            }
+
             // 1. Bildname GUId erzeugen und uploaden in Ordner "Bild"
             Bild bild = new();
             bild.file = neuerArtikel.Bild;
@@ -237,7 +243,8 @@ namespace Web_AspDotNet_ArtikelDb
 
         [HttpGet]
         public IActionResult Update(int id)
-        {
+        {            
+
             UpdateArtikel updateArticle = new();
 
             // 3. SQL-Command (insert-Statement)
@@ -267,15 +274,16 @@ namespace Web_AspDotNet_ArtikelDb
         }
 
         [HttpPost]
-        public IActionResult Update(Artikel artikel)
+        public IActionResult Update(UpdateArtikel updateArtikel)
         {            
+            
             // 3. SQL-Command (update-Statement)
-            SqliteCommand cmdSqlUpdate = new SqliteCommand($"UPDATE Artikel SET (Bezeichnung,EPreis,Bild) VALUES (@bezeichnung,@preis,@bildname) " +
+            SqliteCommand cmdSqlUpdate = new SqliteCommand($"UPDATE Artikel SET Bezeichnung=@bezeichnung, EPreis=@preis, Bild=@bildname " +
                 $"WHERE AId = @aId;", conn);
-            cmdSqlUpdate.Parameters.AddWithValue("@aId", artikel.AId);
-            cmdSqlUpdate.Parameters.AddWithValue("@bezeichnung", artikel.AId);
-            cmdSqlUpdate.Parameters.AddWithValue("@preis", artikel.AId);
-            cmdSqlUpdate.Parameters.AddWithValue("@bildname", artikel.AId);
+            cmdSqlUpdate.Parameters.AddWithValue("@aId", updateArtikel.AId);
+            cmdSqlUpdate.Parameters.AddWithValue("@bezeichnung", updateArtikel.Bezeichnung);
+            cmdSqlUpdate.Parameters.AddWithValue("@preis", Double.Parse(updateArtikel.Preis));
+            cmdSqlUpdate.Parameters.AddWithValue("@bildname", updateArtikel.Bildname);
 
             // 4. Verbindung öffnen
             conn.Open();

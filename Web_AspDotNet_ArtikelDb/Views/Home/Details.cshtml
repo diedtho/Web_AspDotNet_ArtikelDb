@@ -13,12 +13,16 @@
     <title>Details</title>
 </head>
 <body style="background-color:chartreuse;border-radius:11px,11px,11px,11px">
-    <h1>Artikel DB</h1>
-    <h2>Details</h2>
-    <label asp-for="@Model.AId">@Model.AId</label><br />
-    <label asp-for="@Model.Bezeichnung">@Model.Bezeichnung</label><br />
-    <img src="/Bilder/@Model.Bildname" width="555" /><br />
-    <label asp-for="@Model.Preis">@Model.Preis</label>
-    <a href="/home/index">Zurück</a>
+    <div style="width:90%;margin:auto">
+        <h1 class="Ueberschrift Hintergrund"><strong>Artikel DB (ändern)</strong></h1>
+        <h2>Details</h2>
+    </div>
+    <div style="width:80%;margin:auto;background-color:cornflowerblue;padding:1em;border-radius:10px">        
+        <label asp-for="@Model.AId">@Model.AId</label><br />
+        <label asp-for="@Model.Bezeichnung">@Model.Bezeichnung</label><br />
+        <img src="/Bilder/@Model.Bildname" width="555" /><br />
+        <label asp-for="@Model.Preis">@Model.Preis</label>
+        <a href="/home/index">Zurück</a>
+    </div>
 </body>
 </html>

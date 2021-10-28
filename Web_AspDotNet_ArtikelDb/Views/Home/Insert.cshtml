@@ -14,13 +14,29 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body>
-    <form method="post" asp-action="Insert" enctype="multipart/form-data" style="background-color:aquamarine">
-        <h1>Artikel DB (neu)</h1>
-        <input type="text" asp-for="@Model.Bezeichnung" /><label asp-for="@Model.Bezeichnung"></label><br />
-        <input type="text" asp-for="@Model.Preis" /><label asp-for="@Model.Preis"></label><br />
-        <input type="file" asp-for="@Model.Bild" /><br />
-        <button>Speichern</button>
-        <button type="reset">Reset</button>
-    </form>
+    <div style="width:90%;margin:auto">
+        <h1 class="Ueberschrift Hintergrund"><strong>Artikel DB (neu)</strong></h1>
+    </div>
+    <div style="width:80%;margin:auto;background-color:cornflowerblue;padding:1em;border-radius:10px">
+        <form method="post" asp-action="Insert" enctype="multipart/form-data" style="background-color:aquamarine">
+            <div class="mb-3">
+                <label asp-for="@Model.Bezeichnung" class="form-label"></label>
+                <input type="text" asp-for="@Model.Bezeichnung" class="form-control" />
+                <span asp-validation-for="@Model.Bezeichnung"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="@Model.Preis" class="form-label"></label>
+                <input type="text" asp-for="@Model.Preis" class="form-control" />
+                <span asp-validation-for="@Model.Preis"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="@Model.Bild" class="form-label"></label>
+                <input type="file" asp-for="@Model.Bild" class="form-control" />
+                <span asp-validation-for="@Model.Bild"></span>
+            </div>
+            <button>Speichern</button>
+            <button type="reset">Reset</button>
+        </form>
+    </div>
 </body>
 </html>
