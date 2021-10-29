@@ -296,12 +296,12 @@ namespace Web_AspDotNet_ArtikelDb
 
             // 6. Verbindung schließen
             conn.Close();
-
+           
             return RedirectToAction("Admin");
         }
 
         [HttpGet]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(int id, string Bildername)
         {
             // 3. SQL-Command (update-Statement)
             SqliteCommand cmdSqlUpdate = new SqliteCommand($"DELETE FROM Artikel WHERE AId = @aId;", conn);
@@ -315,6 +315,9 @@ namespace Web_AspDotNet_ArtikelDb
 
             // 6. Verbindung schließen
             conn.Close();
+
+            // Bild aus "wwwroot/Bilder"-Verzeichnis löschen
+            System.IO.File.Delete("/wwwroot/Bilder/" + Bildername);
 
             return RedirectToAction("Admin");
         }
