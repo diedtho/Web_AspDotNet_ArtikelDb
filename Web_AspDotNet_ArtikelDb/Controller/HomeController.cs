@@ -79,15 +79,18 @@ namespace Web_AspDotNet_ArtikelDb
 
             // 3. SQL-Command
             SqliteCommand cmdSql;
-            if (filter != null)
-            {
-                cmdSql = new SqliteCommand("Select * From Artikel WHERE Bezeichnung LIKE '%'||@filter||'%';", conn);
-                cmdSql.Parameters.AddWithValue("@filter", filter);
-            }
-            else
-            {
-                cmdSql = new SqliteCommand("Select * From Artikel;", conn);
-            }
+            //if (filter != null)
+            //{
+            //    cmdSql = new SqliteCommand("Select * From Artikel WHERE Bezeichnung LIKE '%'||@filter||'%';", conn);
+            //    cmdSql.Parameters.AddWithValue("@filter", filter);
+            //}
+            //else
+            //{
+            //    cmdSql = new SqliteCommand("Select * From Artikel;", conn);
+            //}
+
+            cmdSql = new SqliteCommand("Select * From Artikel WHERE Bezeichnung LIKE '%'||@filter||'%';", conn);
+            cmdSql.Parameters.AddWithValue("@filter", filter == null ? "" : filter);
 
             // 4. Verbindung öffnen
             conn.Open();

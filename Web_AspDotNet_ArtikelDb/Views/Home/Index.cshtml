@@ -46,13 +46,17 @@
                 <tbody>
                     @foreach (var art in @Model.ArtikelListe)
                     {
-                        <tr>
-                            <td>@art.AId</td>
-                            <td>@art.Bezeichnung</td>
-                            <td>@art.Preis</td>
-                            <td><img src="/Bilder/@art.Bildname" width="80" /></td>
-                            <td><a href="/home/details?id=@art.AId">🔍</a></td>
-                        </tr>
+                    <tr>
+                        <td>@art.AId</td>
+                        <td>@art.Bezeichnung</td>
+                        <td>@art.Preis</td>
+                        @* Wenn der Preis als Double im Model gespeichert ist: <td>@art.Preis.ToString("C2")</td>
+                            "C2" steht für "Currency 2", ein Währungsformat
+                            Siehe auch https://docs.microsoft.com/de-de/dotnet/standard/base-types/standard-numeric-format-strings !
+                        *@
+                        <td><img src="/Bilder/@art.Bildname" width="80" /></td>
+                        <td><a href="/home/details?id=@art.AId">🔍</a></td>
+                    </tr>
                     }
                 </tbody>
             </table>
