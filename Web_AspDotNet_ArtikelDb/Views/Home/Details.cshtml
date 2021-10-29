@@ -11,17 +11,36 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Details</title>
+    @*Bootstrap-Form: https://getbootstrap.com/docs/5.1/forms/form-control/*@
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
-<body style="background-color:chartreuse;border-radius:11px,11px,11px,11px">
-    <div style="width:90%;margin:auto">
-        <h1 class="Ueberschrift Hintergrund"><strong>Artikel DB (ändern)</strong></h1>
-        <h2>Details</h2>
+<body>
+    <div style="width:80%;margin:auto">
+        <h1 class="Ueberschrift Hintergrund"><strong>Artikel DB</strong></h1>
     </div>
-    <div style="width:80%;margin:auto;background-color:cornflowerblue;padding:1em;border-radius:10px">        
-        <label asp-for="@Model.AId">@Model.AId</label><br />
-        <label asp-for="@Model.Bezeichnung">@Model.Bezeichnung</label><br />
-        <img src="/Bilder/@Model.Bildname" width="555" /><br />
-        <label asp-for="@Model.Preis">@Model.Preis</label>
+    <div style="width:80%;margin:auto;background-color:cornflowerblue;padding:1em;border-radius:10px">
+        <fieldset>
+            <legend>Details</legend>
+            <div class="mb-3">
+                <label asp-for="@Model.AId" style="font-weight:bold"></label><br />
+                @Model.AId                
+            </div>
+            <div class="mb-3">
+                <label asp-for="@Model.Bezeichnung" style="font-weight:bold"></label><br />
+                @Model.Bezeichnung                
+            </div>
+            <div class="mb-3">
+                <label asp-for="@Model.Preis" style="font-weight:bold"></label><br />
+                @Model.Preis                
+            </div>
+            <div class="mb-3">
+                <label asp-for="@Model.Bildname" style="font-weight:bold"></label><br />                
+                @Model.Bildname
+                <br /><br />
+                <img src="/Bilder/@Model.Bildname" width="555" />
+                <br />
+            </div>
+        </fieldset>
         <a href="/home/index">Zurück</a>
     </div>
 </body>

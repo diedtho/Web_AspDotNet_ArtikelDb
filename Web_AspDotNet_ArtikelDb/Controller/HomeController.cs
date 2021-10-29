@@ -27,7 +27,7 @@ namespace Web_AspDotNet_ArtikelDb
             InfoUeberWebserver = _environment;
 
             // 1. Connection-String
-            string connStr = "Data Source =./ArtikelDb.db;";
+            string connStr = "Data Source =./DB/ArtikelDb.db;";
 
             // 2. SQL-Connection
             conn = new SqliteConnection(connStr);
