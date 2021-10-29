@@ -334,7 +334,7 @@ namespace Web_AspDotNet_ArtikelDb
             // 5. Ergebnis des Selects lesen
             var dr = cmdSqlSelect.ExecuteReader();
             if (dr.Read()) // "if" kann statt "while" verwendet werden, weil nur ein Artikel abgefragt wird und damit gleichzeitig geprüft wird,
-                            // ob überhaupt ein Artikel mit der Abfrage erhalten wird
+                            // ob überhaupt ein Artikel durch die Abfrage erhalten wird
             {
                 showArticle = new Artikel
                 {
